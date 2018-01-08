@@ -10,6 +10,7 @@ use Silex\Provider\TwigServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 const BASE_URL = '/';
+const VHOSTS_PATH = __DIR__ . '/../vhosts';
 
 $app = new Silex\Application();
 $app['debug'] = isset($_GET['debug']);
@@ -61,11 +62,30 @@ $app->register(new SecurityServiceProvider(), [
 ]);
 
 $app->get('/', function () use ($app) {
+    $directoryIterator = new DirectoryIterator(VHOSTS_PATH);
+    $vhosts = [];
+    foreach ($directoryIterator as $entry) {
+        if($entry->isFile() && $entry->getExtension() == 'conf') {
+            $vhosts[] = ['name' => $entry->getFilename()];
+        }
+    }
     return $app['twig']->render('index.twig', [
-        'baseUrl' => BASE_URL
+        'baseUrl' => BASE_URL,
+        'vhosts' => $vhosts
     ]);
 });
 
+$app->get('/view-file-content', function (Request $request) use ($app) {
+    $file = $request->query->get('file');
+    $content = file_get_contents(VHOSTS_PATH . "/$file");
+    return $app->json(compact('content'));
+});
+$app->post('/save-vhost', function (Request $request) use ($app) {
+    $body = $request->request->all();
+    $path = sprintf('%s/%s', VHOSTS_PATH, $body['file']);
+    $result = file_put_contents($path, $body['content']);
+    return $app->json(compact('result'));
+});
 $app->get('/login', function (Request $request) use ($app) {
     return $app['twig']->render('login.twig', [
         'error' => $app['security.last_error']($request),

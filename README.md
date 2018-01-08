@@ -8,11 +8,13 @@ In your server, follow the above steps:
 
 1. Clone this repo;
 1. Execute `composer install` inside new folder;
+1. Execute `bower install` inside new folder;
 1. Copy self vhost config to vhosts folder `cp provison/nginx-vhost-manager.conf vhosts`.
 As **default** this is configured to listen on port `8080`, uses
 `/srv/www/nginx-vhost-manager/public` as root folder and use `fastcgi_pass 127.0.0.1:9000`
 to send code to PHP-FPM ,
 if necessary you should make appropriate changes;
+1. Make the Nginx proccess user as owner of `vhosts` folder, as exemple: `chown -R www-data vhosts`
 1. Copy `provision/app.db` to `database/app.db`;
 1. Access from browser (if you're using default config it's something like `localhot:8080`);
 1. Use `admin:admin` credentials for first access, then **change the password**

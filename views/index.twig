@@ -1,16 +1,54 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2>Login</h2>
-                </div>
-                <div class="panel-body">
-                    
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Vhosts
+                    <a href="#" data-selector="create-vhost-btn" class="btn btn-sm btn-primary pull-right">
+                        <span class="glyphicon glyphicon-plus"></span> Create Vhost
+                    </a>
+                </h2>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Vhost</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vhost in vhosts %}
+                        <tr>
+                            <td>{{ vhost.name }}</td>
+                            <td>
+                                <a href="{{ vhost.name }}" class="btn btn-sm btn-default" title="Edit" data-selector="edit-file">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="{{ vhost.name }}" class="btn btn-sm btn-danger" title="Delete" data-selector="delete-file">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
+<script id="content-editor-template" type="text/x-handlebars-template">
+{% verbatim %}
+    <textarea name="content" cols="30" rows="10" class="form-control">{{content}}</textarea>
+    <input type="hidden" name="file" value="{{filename}}">
+{% endverbatim %}
+</script>
+<script id="form-creator-template" type="text/x-handlebars-template">
+{% verbatim %}
+    <label>Domínio</label>
+    <input class="form-control" type="text" name="file" value="{{filename}}">
+{% endverbatim %}
+</script>
 {% endblock %}
