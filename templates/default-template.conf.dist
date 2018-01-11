@@ -1,8 +1,8 @@
 server {
-    listen 8088;
-    root /srv/www/nginx-vhost-manager/public;
+    listen 80;
+    root /srv/www/{{domain}};
     index index.html index.htm index.php;
-    server_name localhost;
+    server_name {{domain}} www.{{domain}};
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
     }
