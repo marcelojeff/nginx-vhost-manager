@@ -15,7 +15,7 @@ $(document).ready(function(){
     modalForm.submit(function(e){
         e.preventDefault();
         var form = $(this);
-        $.post(form.attr('action'), form.serialize(), function(result) {
+        $.post(form.attr('action') + '?debug', form.serialize(), function(result) {
             if (result) {
                 modal.modal('toggle');
             } else {
@@ -41,5 +41,10 @@ $(document).ready(function(){
         e.preventDefault();
         var btn = $(this);
         var url = baseUrl + 'view-file-content';
+        var source = $('#form-creator-template').html();
+        var template = Handlebars.compile(source);
+        configureForm(modalForm, 'create-vhost');
+        configureModal(modal, 'Criar vHost', template());
+        modal.modal();
     });
 });

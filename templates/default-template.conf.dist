@@ -1,0 +1,28 @@
+server {
+    listen 8088;
+    root /srv/www/nginx-vhost-manager/public;
+    index index.html index.htm index.php;
+    server_name localhost;
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+    location ~ .*\.(php|phtml)?$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param APPLICATION_ENV development;
+        fastcgi_pass 127.0.0.1:9001;
+        fastcgi_index index.php;
+    }
+    location ~ .*\.(git|jpg|jpeg|png|bmp|swf|ico)?$ {
+        expires 30d;
+        access_log off;
+        add_header Cache-Control "public";
+    }
+    location ~ .*\.(js|css)?$ {
+        expires -1;
+        access_log off;
+    }
+    location ~ /\.ht {
+        deny all;
+    }
+}

@@ -41,14 +41,19 @@
 </div>
 <script id="content-editor-template" type="text/x-handlebars-template">
 {% verbatim %}
-    <textarea name="content" cols="30" rows="10" class="form-control">{{content}}</textarea>
-    <input type="hidden" name="file" value="{{filename}}">
+    <div class="form-group">
+        <label>{{filename}}</label>
+        <textarea name="content" cols="30" rows="10" class="form-control">{{content}}</textarea>
+        <input type="hidden" name="file" value="{{filename}}">
+    </div>
 {% endverbatim %}
 </script>
 <script id="form-creator-template" type="text/x-handlebars-template">
 {% verbatim %}
-    <label>Domínio</label>
-    <input class="form-control" type="text" name="file" value="{{filename}}">
+    <div class="form-group">
+        <label>Domain (without www)</label>
+        <input class="form-control" type="text" name="domain" placeholder="exemple.com">
+    </div>
 {% endverbatim %}
 </script>
 {% endblock %}

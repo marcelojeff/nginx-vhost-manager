@@ -86,6 +86,18 @@ $app->post('/save-vhost', function (Request $request) use ($app) {
     $result = file_put_contents($path, $body['content']);
     return $app->json(compact('result'));
 });
+$app->post('/create-vhost', function (Request $request) use ($app) {
+    $body = $request->request->all();
+    $domain = trim($body['domain']);
+    $path = sprintf('%s/%s.conf', VHOSTS_PATH, $domain);
+    $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
+    $twig = new Twig_Environment($loader);
+    $rendered = $twig->render('default-template.conf', [
+        'domain' => $domain
+    ]);
+    $result = file_put_contents($path, $rendered);
+    return $app->json(compact('result'));
+});
 $app->get('/login', function (Request $request) use ($app) {
     return $app['twig']->render('login.twig', [
         'error' => $app['security.last_error']($request),
