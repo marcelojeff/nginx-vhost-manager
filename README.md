@@ -17,12 +17,16 @@ if necessary you should make appropriate changes;
 1. Make the Nginx proccess user as owner of `vhosts` folder, as exemple: `chown -R www-data vhosts`
 1. Copy `provision/app.db` to `database/app.db`;
 1. Access from browser (if you're using default config it's something like `localhot:8080`);
-1. Use `admin:admin` credentials for first access, then **change the password**
-to active the App, as before a password change you're unable to use it.
+1. Use `admin:foo` credentials for first access, then **change the password** (TODO).
+For now, we strongly encourages to use this only inside a VPN.
 1. Edit your Nginx configuration file (normally `/etc/nginx/nginx.conf`) to add
 an `include` directive on the `http` section as follow: `include ABSOLUTE_PATH_TO_THIS_APP/vhosts`.
 Note that `ABSOLUTE_PATH_TO_THIS_APP` will be `/srv/www/nginx-vhost-manager`
 if using default config, or your custom path.
 
 ## Usage
-With installation done, you must create your own Nginx configuration templates
+With installation done, you must create your own Nginx configuration templates inside `templates` folder,
+you can use the `.dist` file as base;
+
+If you desire, you could put a folder named `default-files` inside `templates`, and when you check the option 
+**Copy files from template folder** while creating a vHost, then the files will be copied to `../HOST_NAME_OF_VHOST_BEING_CREATED`

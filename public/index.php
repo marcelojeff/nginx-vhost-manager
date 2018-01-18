@@ -93,9 +93,17 @@ $app->post('/create-vhost', function (Request $request) use ($app) {
     $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates');
     $twig = new Twig_Environment($loader);
     $rendered = $twig->render('default-template.conf', [
-        'domain' => $domain
+        'domain' => $domain,
+        'alias' => $body['alias']
     ]);
     $result = file_put_contents($path, $rendered);
+    $folderPath = __DIR__ . '/../../' . $domain;
+    if ($body['copy_files']) {
+        $folderTemplate = __DIR__ . '/../templates/default-files';
+        shell_exec("cp -r $folderTemplate $folderPath");
+    } else {
+        mkdir($folderPath);
+    }
     return $app->json(compact('result'));
 });
 $app->get('/login', function (Request $request) use ($app) {

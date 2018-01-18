@@ -2,7 +2,7 @@ server {
     listen 80;
     root /srv/www/{{domain}};
     index index.html index.htm index.php;
-    server_name {{domain}} www.{{domain}};
+    server_name {{domain}} www.{{domain}} {{alias}}.exemple.com.br;
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
     }
@@ -10,7 +10,7 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         fastcgi_param APPLICATION_ENV development;
-        fastcgi_pass 127.0.0.1:9001;
+        fastcgi_pass 127.0.0.1:9000;
         fastcgi_index index.php;
     }
     location ~ .*\.(git|jpg|jpeg|png|bmp|swf|ico)?$ {

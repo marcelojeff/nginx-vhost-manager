@@ -54,6 +54,18 @@
         <label>Domain (without www)</label>
         <input class="form-control" type="text" name="domain" placeholder="exemple.com">
     </div>
+    <div class="form-group">
+        <label>Alias</label>
+        <input class="form-control" type="text" name="alias" placeholder="exemple">
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="hidden" name="copy_files" value="0">
+                <input type="checkbox" name="copy_files" value="1"> Copy files from template folder
+            </label>
+        </div>
+    </div>
 {% endverbatim %}
 </script>
 {% endblock %}

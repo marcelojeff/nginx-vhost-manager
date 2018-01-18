@@ -44,7 +44,7 @@ $(document).ready(function(){
         var source = $('#form-creator-template').html();
         var template = Handlebars.compile(source);
         configureForm(modalForm, 'create-vhost');
-        configureModal(modal, 'Criar vHost', template());
+        configureModal(modal, 'Create vHost', template());
         modal.modal();
     });
 });
