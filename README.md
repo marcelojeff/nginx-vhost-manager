@@ -30,3 +30,9 @@ you can use the `.dist` file as base;
 
 If you desire, you could put a folder named `default-files` inside `templates`, and when you check the option 
 **Copy files from template folder** while creating a vHost, then the files will be copied to `../HOST_NAME_OF_VHOST_BEING_CREATED`
+
+### Auto reload Nginx configuration
+To make the usage even easier, we suggest use the tool [incron](http://inotify.aiken.cz/?section=incron&page=doc&lang=en) wich will watch for
+the *.conf* file changes and performs an Nginx reload.
+
+Exemple of **incrontab** entry in a SO using *systemctl*: `/srv/www/nginx-vhost-manager/vhosts IN_CLOSE_WRITE systemctl reload nginx`
